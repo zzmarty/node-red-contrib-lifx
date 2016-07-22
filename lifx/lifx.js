@@ -59,7 +59,7 @@ module.exports = function(RED) {
 
 
         // send initial values
-        setPower(this.state.on, this.state.lightLabel);
+        setPower(this.state.on? 'on':'off', this.state.lightLabel);
         setColor(this.state, this.state.lightLabel);
 
         // respond to inputs....
