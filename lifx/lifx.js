@@ -43,7 +43,7 @@ module.exports = function(RED) {
         }
 
         function setColor(params, lightLabel) {
-            if (lightLabel) {
+            if (lightLabel && params.hue && params.saturation && params.luminance) {
                 var light = lx.light(lightLabel);
                 node.log("Setting color: " + JSON.stringify(params));
 
@@ -59,8 +59,8 @@ module.exports = function(RED) {
 
 
         // send initial values
-        setPower(this.state.on);
-        setColor(this.state);
+        setPower(this.state.on, this.state.lightLabel);
+        setColor(this.state, this.state.lightLabel);
 
         // respond to inputs....
         this.on('input', function (msg) {
