@@ -1,4 +1,28 @@
+<script type="text/x-red" data-template-name="lifx-client">
+    <div class="form-row">
+        <label for="node-config-input-key"><i class="fa fa-lightbulb-o"></i> Name</label>
+        <input type="text" id="node-config-name">
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('lifx-client',{
+        category: 'config',
+        label: function() {
+            return this.name? this.name : 'lifx-client';
+        },
+        defaults: {
+            name: {required: true, value: 'LiFx Client'}
+        }
+    });
+</script>
+
 <script type="text/x-red" data-template-name="lifx">
+    <div class="form-row">
+        <label for="node-input-lx"><i class="fa fa-key"></i> Client</label>
+        <input type="text" id="node-input-lx">
+    </div>
+
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
@@ -34,10 +58,6 @@
         <input type="text" id="node-input-fadeTime" placeholder="transition time in milliseconds">
     </div>
     <br/>
-    <div class="form-row" id="node-debug">
-        <label for="node-input-once"><i class="fa fa-bug"></i> Debug</label>
-        <input type="checkbox" id="node-input-debug" style="display: inline-block; width: auto; vertical-align: top;">
-    </div>
 </script>
 
 
@@ -62,7 +82,7 @@
             luminance: {value: "100"},
             whiteColor: {value: "3200"},
             fadeTime: {value: "1"},
-            debug: {value: false}
+            lx: {type:"lifx-client", required:true}
         },
         color: "#9AC8B2",
         inputs:1,               // set the number of inputs - only 0 or 1

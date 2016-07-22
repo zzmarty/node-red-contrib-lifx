@@ -32,7 +32,7 @@ Once you restart Node-RED server, there should be a _lifx_ node available in the
 
 On every received message node sends commands to the light specified in "lightLabel" field.
 
-Initial configuration can be set through node's configuration options, including `debug` mode for underlying lifxjs library, which dumps network communication. Node will send initial configuration to light bulbs each time the graph is deployed.
+Initial configuration can be set through node's configuration options. Node will send initial configuration to light bulbs each time the graph is deployed.
 
 ![lifx node configuration example](https://cloud.githubusercontent.com/assets/616767/4834356/034839c4-5fad-11e4-946a-e901ac80b536.png)
 

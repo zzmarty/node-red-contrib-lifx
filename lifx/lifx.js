@@ -2,26 +2,37 @@ module.exports = function(RED) {
     "use strict";
     var merge = require('merge');
 
-    // The main node definition - most things happen in here
-    function LifxNode(n) {
+    // This is a config node holding the Client
+    function LifxClientNode(n) {
         var LifxClient = require('node-lifx').Client;
         var lx = new LifxClient();
-        var node = this;
-        var debug = !!n.debug;
+        this.lx = lx;
+        RED.nodes.createNode(this, n);
 
+        this.on('close', function() {
+            lx.destroy();
+            lx = null;
+        });
+
+        lx.init();
+
+    }
+
+    RED.nodes.registerType('lifx-client', LifxClientNode);
+
+
+    // The main node definition - most things happen in here
+    function LifxNode(n) {
+        var node = this;
+        node.lx = RED.nodes.getNode(n.lx).lx;
         // Create a RED node
         RED.nodes.createNode(this, n);
 
-        lx.on('light-new', function(light) {
+        node.lx.on('light-new', function(light) {
             light.getLabel(function (err, label) {
                 node.log('New bulb found: ' + label + " : " + light.id.toString("hex"));
             });
         });
-
-        lx.init({
-            debug: debug
-        });
-
 
         // Set default values from node configuration
         this.state = {
@@ -36,7 +47,7 @@ module.exports = function(RED) {
 
         function setPower(state, lightLabel) {
             if (lightLabel) {
-                var light = lx.light(lightLabel);
+                var light = node.lx.light(lightLabel);
                 if (light) {
                     node.log("Powering " +  lightLabel + " " + state + "...");
                     light[state]();
@@ -46,7 +57,7 @@ module.exports = function(RED) {
 
         function setColor(params, lightLabel) {
             if (lightLabel && params.hue && params.saturation && params.luminance) {
-                var light = lx.light(lightLabel);
+                var light = node.lx.light(lightLabel);
                 if (light) {
                     node.log("Setting color: " + JSON.stringify(params));
 
@@ -80,10 +91,6 @@ module.exports = function(RED) {
             this.send(out);
         });
 
-        this.on('close', function() {
-            lx.destroy();
-            lx = null;
-        });
     }
 
     // Register the node by name. This must be called before overriding any of the
