@@ -1,52 +1,60 @@
 module.exports = function(RED) {
     "use strict";
-    var lifx = require('lifx');
+    var LifxClient = require('node-lifx').Client;
     var merge = require('merge');
 
     // The main node definition - most things happen in here
     function LifxNode(n) {
-        var lx = lifx.init();
+        var lx = new LifxClient();
         var node = this;
         var debug = !!n.debug;
-        // if(!lx) {
-        //     lx = lifx.init();
-        // }
 
         // Create a RED node
         RED.nodes.createNode(this, n);
 
-        lifx.setDebug(debug);
+        lx.on('light-new', function(light) {
+            light.getLabel(function (err, label) {
+                node.log('New bulb found: ' + label + " : " + light.id.toString("hex"));
+            });
+        });
+
+        lx.init({
+            debug: debug
+        });
+
+
         // Set default values from node configuration
         this.state = {
+            lightLabel: n.lightLabel,
             on: !!n.on,
             hue: n.hue,
             saturation: n.saturation,
             luminance: n.luminance,
             whiteColor: n.whiteColor,
-            fadeTime: n.fadeTime,
+            fadeTime: n.fadeTime
         };
 
-        function setPower(pwr) {
-            if(pwr) {
-                node.log("Lights on");
-                lx.lightsOn();
-            }
-            else {
-                node.log("Lights off");
-                lx.lightsOff();
+        function setPower(state, lightLabel) {
+            if (lightLabel) {
+                node.log("Powering " +  lightLabel + " " + state + "...");
+                var light = lx.light(lightLabel);
+                light[state]();
             }
         }
 
-        function setColor(params) {
-            node.log("Setting color: " + JSON.stringify(params));
+        function setColor(params, lightLabel) {
+            if (lightLabel) {
+                var light = lx.light(lightLabel);
+                node.log("Setting color: " + JSON.stringify(params));
 
-            lx.lightsColour(
-                params.hue,
-                params.saturation,
-                params.luminance,
-                params.whiteColor,
-                params.fadeTime
-            );
+                light.color(
+                    parseInt(params.hue),
+                    parseInt(params.saturation),
+                    parseInt(params.luminance),
+                    parseInt(params.whiteColor),
+                    parseFloat(params.fadeTime)
+                );
+            }
         }
 
 
@@ -59,9 +67,8 @@ module.exports = function(RED) {
             var payload = msg.payload;
 
             this.state = merge(this.state, payload);
-
-            setPower(this.state.on);
-            setColor(this.state);
+            setPower(this.state.on? 'on':'off', this.state.lightLabel);
+            setColor(this.state, this.state.lightLabel);
 
             var out = {
                 payload: this.state
@@ -70,7 +77,7 @@ module.exports = function(RED) {
         });
 
         this.on('close', function() {
-            lx.close();
+            lx.destroy();
             lx = null;
         });
     }

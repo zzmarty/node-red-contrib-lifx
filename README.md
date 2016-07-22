@@ -1,27 +1,27 @@
-# LIFX control node for Node-RED
+# LIFX (2.0 protocol) control node for Node-RED
 
-[![published at npm](https://img.shields.io/npm/v/node-red-contrib-lifx.svg)](https://www.npmjs.org/package/node-red-contrib-lifx)
+[![published at npm](https://img.shields.io/npm/v/node-red-contrib-lifx2.svg)](https://www.npmjs.org/package/node-red-contrib-lifx2)
 
-With this node you can control [LIFX](http://lifx.co/) light bulbs using [Node-RED](http://nodered.org/). The module is mostly a wrapper for unofficial (but great) [lifxjs library](https://github.com/magicmonkey/lifxjs).
+With this node you can control [LIFX](http://lifx.co/) light bulbs that has firmware v2.0 using [Node-RED](http://nodered.org/). The module is mostly a wrapper for unofficial (but great) [node-lifx library](https://github.com/MariusRumpf/node-lifx).
 
 ## Firmware Compatibility
 
-This node depends on lifxjs library version 0.2.1, which should be compatible with the latest versions of LIFX firmware (1.5 was tested).
+This node depends on node-lifx library version 0.6.0, which should be compatible with the latest versions of LIFX firmware (2.0 was tested).
 
-If you use older versions of firmware (probably before 1.2), use version 0.2.x of this package or [v0.2 branch](https://github.com/jnv/node-red-contrib-lifx/tree/v0.2).
+If you use older versions of firmware, just use node-red-contrib-lifx instead (the library I've used/forked to do this one).
 
 ## Installation
 
-You can install [latest release from npm](https://www.npmjs.org/package/node-red-contrib-lifx). In your Node-RED directory run:
+You can install [latest release from npm](https://www.npmjs.org/package/node-red-contrib-lifx2). In your Node-RED directory run:
 
-    npm install node-red-contrib-lifx
+    npm install node-red-contrib-lifx2
 
 Alternatively you can clone repository into `nodes/` directory and install npm dependencies manually:
 
     cd path/to/node-red/
     cd nodes
-    git clone https://github.com/jnv/node-red-contrib-lifx
-    cd node-red-contrib-lifx
+    git clone https://github.com/diegopamio/node-red-contrib-lifx2
+    cd node-red-contrib-lifx2
     npm install
 
 Once you restart Node-RED server, there should be a _lifx_ node available in the nodes palette under _output_ category.
@@ -30,7 +30,7 @@ Once you restart Node-RED server, there should be a _lifx_ node available in the
 
 ## Usage
 
-On every received message node sends commands to all LIFX light bulbs.
+On every received message node sends commands to the light specified in "lightLabel" field.
 
 Initial configuration can be set through node's configuration options, including `debug` mode for underlying lifxjs library, which dumps network communication. Node will send initial configuration to light bulbs each time the graph is deployed.
 
@@ -38,7 +38,7 @@ Initial configuration can be set through node's configuration options, including
 
 ### Parameters
 
-Both initial configuration and message works with the following parameters, which are passed to lifxjs library:
+Both initial configuration and message works with the following parameters, which are passed to node-lifx library:
 
 * `on` (bool) – whether the light should be on, or off; `true` by default
 * `hue` (uint16) – primary color of light; `0xCC15` by default
@@ -93,4 +93,5 @@ On received message node sends a payload with its current stored state. E.g.:
 ## See also
 
 * [lifx-alert](https://github.com/TinajaLabs/lifx-alert/) (Node-RED) lets you set red, green or orange color.
+* [node-red-contrib-lifx] (Node-RED) the 1.x version.
 * [hue](https://github.com/node-red/node-red-nodes/tree/master/hardware/hue) (Node-RED) for Phillips Hue.

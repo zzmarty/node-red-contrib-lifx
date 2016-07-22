@@ -1,29 +1,29 @@
 {
-  "name": "node-red-contrib-lifx",
-  "version": "0.3.0",
-  "description": "Control LIFX wifi lightbulbs with Node-RED.",
+  "name": "node-red-contrib-lifx2",
+  "version": "1.0.0",
+  "description": "Control LIFX (Protocol 2.0) wifi lightbulbs with Node-RED.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jnv/node-red-contrib-lifx.git"
+    "url": "https://github.com/diegopamio/node-red-contrib-lifx.git"
   },
   "keywords": [
     "node-red",
     "lifx",
     "lightbulb"
   ],
-  "author": "jnv",
+  "author": "Diego N. Pamio",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jnv/node-red-contrib-lifx/issues"
+    "url": "https://github.com/diegopamio/node-red-contrib-lifx/issues"
   },
-  "homepage": "https://github.com/jnv/node-red-contrib-lifx",
+  "homepage": "https://github.com/diegopamio/node-red-contrib-lifx",
   "node-red": {
     "nodes": {
       "lifx": "lifx/lifx.js"
     }
   },
   "dependencies": {
-    "lifx": "^0.2.1",
+    "node-lifx": "^0.6.0",
     "merge": "^1.2.0"
   }
 }

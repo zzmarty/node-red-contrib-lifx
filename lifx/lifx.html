@@ -4,29 +4,34 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <br/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-key"></i> Light Label</label>
+        <input type="text" id="node-input-lightLabel" placeholder="e.g.: Kitchen">
+    </div>
+    <br/>
     <div class="form-row" id="node-on">
         <label for="node-input-on"><i class="fa fa-power-off"></i> Light On</label>
         <input type="checkbox" id="node-input-on" style="display: inline-block; width: auto; vertical-align: top;">
     </div>
     <div class="form-row">
         <label for="node-input-hue">Hue</label>
-        <input type="text" id="node-input-hue" placeholder="hue">
+        <input type="text" id="node-input-hue" placeholder="hue from 0 - 360 (in °)">
     </div>
     <div class="form-row">
         <label for="node-input-saturation">Saturation</label>
-        <input type="text" id="node-input-saturation" placeholder="saturation">
+        <input type="text" id="node-input-saturation" placeholder="saturation from 0 - 100 (in %)">
     </div>
     <div class="form-row">
         <label for="node-input-luminance">Luminance</label>
-        <input type="text" id="node-input-luminance" placeholder="luminance">
+        <input type="text" id="node-input-luminance" placeholder="brightness from 0 - 100 (in %)">
     </div>
     <div class="form-row">
         <label for="node-input-whiteColor">White Color</label>
-        <input type="text" id="node-input-whiteColor" placeholder="whiteColor">
+        <input type="text" id="node-input-whiteColor" placeholder="color kelvin between 2500 and 9000">
     </div>
     <div class="form-row">
         <label for="node-input-fadeTime">Fade Time</label>
-        <input type="text" id="node-input-fadeTime" placeholder="fadeTime">
+        <input type="text" id="node-input-fadeTime" placeholder="transition time in milliseconds">
     </div>
     <br/>
     <div class="form-row" id="node-debug">
@@ -50,12 +55,13 @@
         category: 'output',      // the palette category
         defaults: {             // defines the editable properties of the node
             name: {value:""},   //  along with default values.
+            lightLabel: {value: ""},
             on: {value: true},
-            hue: {value: "0xCC15"},
-            saturation: {value: "0xFFFF"},
-            luminance: {value: "0x8000"},
-            whiteColor: {value: "0x00"},
-            fadeTime: {value: "0x0513"},
+            hue: {value: "0"},
+            saturation: {value: "0"},
+            luminance: {value: "100"},
+            whiteColor: {value: "3200"},
+            fadeTime: {value: "1"},
             debug: {value: false}
         },
         color: "#9AC8B2",
