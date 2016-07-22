@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-lifx2",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Control LIFX (Protocol 2.0) wifi lightbulbs with Node-RED.",
   "repository": {
     "type": "git",
