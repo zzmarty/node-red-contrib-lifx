@@ -1,10 +1,10 @@
 module.exports = function(RED) {
     "use strict";
-    var LifxClient = require('node-lifx').Client;
     var merge = require('merge');
 
     // The main node definition - most things happen in here
     function LifxNode(n) {
+        var LifxClient = require('node-lifx').Client;
         var lx = new LifxClient();
         var node = this;
         var debug = !!n.debug;
