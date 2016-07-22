@@ -36,24 +36,28 @@ module.exports = function(RED) {
 
         function setPower(state, lightLabel) {
             if (lightLabel) {
-                node.log("Powering " +  lightLabel + " " + state + "...");
                 var light = lx.light(lightLabel);
-                light[state]();
+                if (light) {
+                    node.log("Powering " +  lightLabel + " " + state + "...");
+                    light[state]();
+                }
             }
         }
 
         function setColor(params, lightLabel) {
             if (lightLabel && params.hue && params.saturation && params.luminance) {
                 var light = lx.light(lightLabel);
-                node.log("Setting color: " + JSON.stringify(params));
+                if (light) {
+                    node.log("Setting color: " + JSON.stringify(params));
 
-                light.color(
-                    parseInt(params.hue),
-                    parseInt(params.saturation),
-                    parseInt(params.luminance),
-                    parseInt(params.whiteColor),
-                    parseFloat(params.fadeTime)
-                );
+                    light.color(
+                        parseInt(params.hue),
+                        parseInt(params.saturation),
+                        parseInt(params.luminance),
+                        parseInt(params.whiteColor),
+                        parseFloat(params.fadeTime)
+                    );
+                }
             }
         }
 
