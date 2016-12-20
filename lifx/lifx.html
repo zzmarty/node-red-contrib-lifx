@@ -68,9 +68,29 @@
    <p><b>msg.payload</b>. msg.payload is an Object.</p>
 </script>
 
+
 <!-- Finally, the node type is registered along with all of its properties   -->
 <!-- The example below shows a small subset of the properties that can be set-->
 <script type="text/javascript">
+    RED.nodes.registerType('lifx-state',{
+      category: 'input',      // the palette category
+      defaults: {             // defines the editable properties of the node
+          name: {value:""},   //  along with default values.
+          lightLabel: {value: ""},
+          lx: {type:"lifx-client", required:true}
+      },
+      color: "#9AC8B2",
+      inputs:1,               // set the number of inputs - only 0 or 1
+      outputs:1,              // set the number of outputs - 0 to n
+      // set the icon (held in icons dir below where you save the node)
+      icon: "light.png",     // saved in  icons/myicon.png
+      label: function() {     // sets the default label contents
+          return this.name||"lifx-state";
+      },
+      labelStyle: function() { // sets the class to apply to the label
+          return this.name?"node_label_italic":"";
+      }
+    });
     RED.nodes.registerType('lifx',{
         category: 'output',      // the palette category
         defaults: {             // defines the editable properties of the node
@@ -95,5 +115,53 @@
         labelStyle: function() { // sets the class to apply to the label
             return this.name?"node_label_italic":"";
         }
+    });
+</script>
+
+
+<script type="text/x-red" data-template-name="lifx-state">
+    <div class="form-row">
+        <label for="node-input-lx"><i class="fa fa-key"></i> Client</label>
+        <input type="text" id="node-input-lx">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <br/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-key"></i> Light Label</label>
+        <input type="text" id="node-input-lightLabel" placeholder="e.g.: Kitchen">
+    </div>
+    <br/>
+</script>
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="lifx-state">
+   <p>Get current state of a Lifx light bulb.</p>
+   <p>Returns current node state.</p>
+   <p><b>msg.payload</b>. msg.payload is an Object.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('lifx-state',{
+      category: 'input',      // the palette category
+      defaults: {             // defines the editable properties of the node
+          name: {value:""},   //  along with default values.
+          lightLabel: {value: ""},
+          lx: {type:"lifx-client", required:true}
+      },
+      color: "#9AC8B2",
+      inputs:1,               // set the number of inputs - only 0 or 1
+      outputs:1,              // set the number of outputs - 0 to n
+      // set the icon (held in icons dir below where you save the node)
+      icon: "light.png",     // saved in  icons/myicon.png
+      label: function() {     // sets the default label contents
+          return this.name||"lifx-state";
+      },
+      labelStyle: function() { // sets the class to apply to the label
+          return this.name?"node_label_italic":"";
+      }
     });
 </script>
