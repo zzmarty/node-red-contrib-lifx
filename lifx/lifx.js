@@ -110,11 +110,17 @@ module.exports = function(RED) {
           });
       });
 
+      // Set default values from node configuration
+      this.state = {
+          lightLabel: n.lightLabel
+      };
+
       // respond to inputs....
       this.on('input', function (msg) {
           var payload = msg.payload;
+          this.state = merge(this.state, payload);
 
-          var light = node.lx.light(payload.lightLabel);
+          var light = node.lx.light(this.state.lightLabel);
           if (light) {
             light.getState(function (err, cstate) {
               if (cstate) {
