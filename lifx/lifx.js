@@ -56,26 +56,28 @@ module.exports = function(RED) {
         }
 
         function setColor(params, lightLabel) {
-            if (lightLabel && params.hue && params.saturation && params.luminance) {
+//            if (lightLabel && params.hue && params.saturation && params.luminance) {
+	    if (lightLabel) {
                 var light = node.lx.light(lightLabel);
                 if (light) {
                     node.log("Setting color: " + JSON.stringify(params));
 
                     light.color(
-                        parseInt(params.hue),
-                        parseInt(params.saturation),
-                        parseInt(params.luminance),
-                        parseInt(params.whiteColor),
-                        parseFloat(params.fadeTime)
+			    params.hue, params.saturation, params.luminance, params.whiteColor, 0
+//                        parseInt(params.hue),
+//                        parseInt(params.saturation),
+//                        parseInt(params.luminance),
+//                        parseInt(params.whiteColor),
+//                        parseFloat(params.fadeTime)
                     );
                 }
             }
         }
 
 
-        // send initial values
-        setPower(this.state.on? 'on':'off', this.state.lightLabel);
-        setColor(this.state, this.state.lightLabel);
+        // send initial values: since hard coded settings are not used, skip this.
+//        setPower(this.state.on? 'on':'off', this.state.lightLabel);
+//        setColor(this.state, this.state.lightLabel);
 
         // respond to inputs....
         this.on('input', function (msg) {
@@ -118,13 +120,13 @@ module.exports = function(RED) {
       // respond to inputs....
       this.on('input', function (msg) {
           var payload = msg.payload;
-          this.state = merge(this.state, payload);
+//          this.state = merge(this.state, payload);
 
           var light = node.lx.light(this.state.lightLabel);
           if (light) {
             light.getState(function (err, cstate) {
               if (cstate) {
-                // node.log('Got state: ' + cstate.label + " : HSK=" + cstate.color.hue + "/" + cstate.color.saturation + "/" + cstate.color.kelvin + " (" + cstate.color.brightness +")");
+                node.log('Got state: ' + cstate.label + " : HSK=" + cstate.color.hue + "/" + cstate.color.saturation + "/" + cstate.color.kelvin + " (" + cstate.color.brightness +")");
                 var out = {
                   payload: {
                     lightLabel: cstate.label,
