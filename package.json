@@ -23,7 +23,7 @@
     }
   },
   "dependencies": {
-    "node-lifx": "^0.6.0",
+    "lifx-lan-client": "^1.0.2",
     "merge": "^1.2.0"
   }
 }

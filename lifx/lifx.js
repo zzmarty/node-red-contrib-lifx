@@ -4,7 +4,7 @@ module.exports = function(RED) {
 
     // This is a config node holding the Client
     function LifxClientNode(n) {
-        var LifxClient = require('node-lifx').Client;
+        var LifxClient = require('lifx-lan-client').Client;
         var lx = new LifxClient();
         this.lx = lx;
         RED.nodes.createNode(this, n);
@@ -49,7 +49,7 @@ module.exports = function(RED) {
             if (lightLabel) {
                 var light = node.lx.light(lightLabel);
                 if (light) {
-                    node.log("Powering " +  lightLabel + " " + state + "...");
+//                    node.log("Powering " +  lightLabel + " " + state + "...");
                     light[state]();
                 }
             }
