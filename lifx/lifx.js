@@ -1,6 +1,7 @@
 module.exports = function(RED) {
     "use strict";
     var merge = require('merge');
+    const debug = require('debug')('lifx')
 
     // This is a config node holding the Client
     function LifxClientNode(n) {
@@ -30,7 +31,7 @@ module.exports = function(RED) {
 
         node.lx.on('light-new', function(light) {
             light.getLabel(function (err, label) {
-                node.log('New bulb found: ' + label + " : " + light.id.toString("hex"));
+                debug('New bulb found: ' + label + " : " + light.id.toString("hex"));
             });
         });
 
@@ -49,7 +50,7 @@ module.exports = function(RED) {
             if (lightLabel) {
                 var light = node.lx.light(lightLabel);
                 if (light) {
-//                    node.log("Powering " +  lightLabel + " " + state + "...");
+//                    debug("Powering " +  lightLabel + " " + state + "...");
                     light[state]();
                 }
             }
@@ -60,7 +61,7 @@ module.exports = function(RED) {
 	    if (lightLabel) {
                 var light = node.lx.light(lightLabel);
                 if (light) {
-                    node.log("Setting color: " + JSON.stringify(params));
+                    debug("Setting color: " + JSON.stringify(params));
 
                     light.color(
 			    params.hue, params.saturation, params.luminance, params.whiteColor, 0
@@ -108,7 +109,7 @@ module.exports = function(RED) {
 
       node.lx.on('light-new', function(light) {
           light.getLabel(function (err, label) {
-              node.log('New bulb found: ' + label + " : " + light.id.toString("hex"));
+              debug('New bulb found: ' + label + " : " + light.id.toString("hex"));
           });
       });
 
@@ -126,7 +127,7 @@ module.exports = function(RED) {
           if (light) {
             light.getState(function (err, cstate) {
               if (cstate) {
-                node.log('Got state: ' + cstate.label + " : HSK=" + cstate.color.hue + "/" + cstate.color.saturation + "/" + cstate.color.kelvin + " (" + cstate.color.brightness +")");
+                debug('Got state: ' + cstate.label + " : HSK=" + cstate.color.hue + "/" + cstate.color.saturation + "/" + cstate.color.kelvin + " (" + cstate.color.brightness +")");
                 var out = {
                   payload: {
                     lightLabel: cstate.label,

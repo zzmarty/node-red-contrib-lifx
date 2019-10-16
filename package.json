@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "lifx-lan-client": "^1.0.2",
-    "merge": "^1.2.0"
+    "merge": "^1.2.0",
+    "debug": "4.1.1"
   }
 }
